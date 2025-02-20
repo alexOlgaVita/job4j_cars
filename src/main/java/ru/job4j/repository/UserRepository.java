@@ -32,8 +32,9 @@ public class UserRepository {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-        session.close();
         return user;
     }
 
@@ -55,8 +56,9 @@ public class UserRepository {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-        session.close();
     }
 
     /**
@@ -75,8 +77,9 @@ public class UserRepository {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-        session.close();
     }
 
     /**
@@ -102,7 +105,7 @@ public class UserRepository {
         Query<User> query = session.createQuery(
                 "from User as u where u.id = :fId", User.class);
         query.setParameter("fId", userId);
-        Optional<User> result = Optional.ofNullable(query.uniqueResult());
+        Optional<User> result = query.uniqueResultOptional();
         session.close();
         return result;
     }
@@ -134,7 +137,7 @@ public class UserRepository {
         Query<User> query = session.createQuery(
                 "from User as u where u.login = :flogin", User.class);
         query.setParameter("flogin", login);
-        Optional<User> result = Optional.ofNullable(query.uniqueResult());
+        Optional<User> result = query.uniqueResultOptional();
         session.close();
         return result;
     }
