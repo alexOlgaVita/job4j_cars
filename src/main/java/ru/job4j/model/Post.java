@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.EqualsAndHashCode.Include;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class Post {
     private int id;
 
     private String description;
-    private LocalDateTime created;
+    private Timestamp created;
 
     @ManyToOne
     @JoinColumn(name = "auto_user_id")

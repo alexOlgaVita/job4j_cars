@@ -5,6 +5,7 @@ import javax.persistence.*;
 import lombok.*;
 import lombok.EqualsAndHashCode.Include;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
@@ -20,5 +21,5 @@ public class PriceHistory {
     private int id;
     private long before;
     private long after;
-    private LocalDateTime created
+    private Timestamp created;
 }
