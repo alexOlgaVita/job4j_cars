@@ -13,5 +13,7 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <mapping class="ru.job4j.model.User" />
+        <mapping class="ru.job4j.model.Post" />
+        <mapping class="ru.job4j.model.PriceHistory" />
     </session-factory>
 </hibernate-configuration>
