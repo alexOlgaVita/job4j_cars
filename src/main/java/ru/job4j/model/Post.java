@@ -22,7 +22,7 @@ public class Post {
     private int id;
 
     private String description;
-    private Timestamp created;
+    private LocalDateTime created;
 
     @ManyToOne
     @JoinColumn(name = "auto_user_id")
