@@ -16,7 +16,8 @@ public class Car {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "engine_id", foreignKey = @ForeignKey(name = "ENGINE_ID_FK"))
+   /* @JoinColumn(name = "engine_id", foreignKey = @ForeignKey(name = "ENGINE_ID_FK")) */
+    @JoinColumn(name = "engine_id")
     private Engine engine;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
