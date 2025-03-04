@@ -1,6 +1,7 @@
 package ru.job4j.repository;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 import ru.job4j.model.User;
 
 import javax.persistence.Entity;
@@ -10,7 +11,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @Entity
-@Table(name = "auto_users")
+/* @Table(name = "auto_users") */
+@Repository
 @AllArgsConstructor
 public class UserRepository {
 

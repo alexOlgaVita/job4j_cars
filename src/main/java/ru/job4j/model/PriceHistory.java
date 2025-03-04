@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "price_history")
 public class PriceHistory {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Include

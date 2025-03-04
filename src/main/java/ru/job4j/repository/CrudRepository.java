@@ -4,13 +4,16 @@ import lombok.AllArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
+@Repository
 @AllArgsConstructor
 public class CrudRepository {
     private final SessionFactory sf;
@@ -82,5 +85,47 @@ public class CrudRepository {
         } finally {
             session.close();
         }
+    }
+
+    public <T> boolean queryBoolean(String query, Map<String, Object> args) {
+        Predicate<Session> command = session -> {
+            var sq = session
+                    .createQuery(query);
+            for (Map.Entry<String, Object> arg : args.entrySet()) {
+                sq.setParameter(arg.getKey(), arg.getValue());
+            }
+            return sq.executeUpdate() > 0;
+        };
+        return txBoolean(command);
+    }
+
+    public <T> boolean txBoolean(Predicate<Session> command) {
+        Session session = sf.openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            boolean rsl = command.test(session);
+            transaction.commit();
+            return rsl;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            /*
+            Убираем исключение и просто возвращаем false, чтобы вернуть пользователю удобное сообщение
+            throw e;
+            */
+            return false;
+        } finally {
+            session.close();
+        }
+    }
+
+    public boolean runBoolean(Consumer<Session> command) {
+        return txBoolean(session -> {
+                    command.accept(session);
+                    return true;
+                }
+        );
     }
 }
