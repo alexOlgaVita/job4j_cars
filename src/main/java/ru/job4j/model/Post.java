@@ -1,14 +1,17 @@
 package ru.job4j.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode.Include;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
-//@Data
-//@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "auto_posts")
 @Getter
@@ -37,7 +40,7 @@ public class Post {
     @JoinColumn(name = "history_id")
     private History history;
 
-/*    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)*/
+    /*    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)*/
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "posts_photos", joinColumns = {
             @JoinColumn(name = "post_id", nullable = false, updatable = false)},
