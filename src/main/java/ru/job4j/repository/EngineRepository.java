@@ -29,7 +29,7 @@ public class EngineRepository {
     }
 
     /**
-     * Обновить в базе двигателейы.
+     * Обновить в базе двигатель.
      *
      * @param engine двигатель.
      */
@@ -38,7 +38,7 @@ public class EngineRepository {
     }
 
     /**
-     * Удалить двигателейы по id.
+     * Удалить двигатель по id.
      *
      * @param engineId ID
      */
@@ -59,7 +59,7 @@ public class EngineRepository {
     }
 
     /**
-     * Найти двигателейы по ID
+     * Найти двигатель по ID
      *
      * @return двигатель.
      */
@@ -84,7 +84,7 @@ public class EngineRepository {
     }
 
     /**
-     * Найти двигателейы по name.
+     * Найти двигатель по name.
      *
      * @param name name.
      * @return Optional or engine.

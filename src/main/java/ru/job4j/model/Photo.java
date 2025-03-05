@@ -1,19 +1,24 @@
 package ru.job4j.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "engines")
 @Data
-public class Engine {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
+@Table(name = "photos")
+@AllArgsConstructor
+@NoArgsConstructor
+public class Photo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     @EqualsAndHashCode.Include
-    private int id;
+    private Integer id;
+
     private String name;
 }

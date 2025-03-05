@@ -85,7 +85,7 @@ public class PostRepository {
      * @return объявление.
      */
     public List<Post> findWithPhoto() {
-        return null;
+        return crudRepository.query("from Post f JOIN FETCH f.photos a where a is not null", Post.class);
     }
 
     /**
@@ -95,6 +95,7 @@ public class PostRepository {
      * @return объявление.
      */
     public List<Post> findByBrand(String brand) {
-        return null;
+        return crudRepository.query("FROM Post f INNER JOIN FETCH f.brand a where a.name = :fBrand", Post.class,
+                Map.of("fBrand", brand));
     }
 }

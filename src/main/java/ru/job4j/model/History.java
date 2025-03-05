@@ -4,16 +4,18 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "engines")
+@Table(name = "histories")
 @Data
-public class Engine {
+public class History {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @EqualsAndHashCode.Include
     private int id;
-    private String name;
+    private LocalDateTime startAt;
+    private LocalDateTime endAt;
 }
