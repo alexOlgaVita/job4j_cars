@@ -35,7 +35,6 @@ public class Car {
     private CarBody carBody;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "history_owners", joinColumns = {
             @JoinColumn(name = "car_id", nullable = false, updatable = false)},
             inverseJoinColumns = {
