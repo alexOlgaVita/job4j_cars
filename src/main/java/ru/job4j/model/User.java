@@ -1,19 +1,23 @@
 package ru.job4j.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "auto_users")
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String login;
 
@@ -26,4 +30,28 @@ public class User {
             inverseJoinColumns = { @JoinColumn(name = "post_id") }
     )
     private List<Post> participates = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Task{"
+                + "id=" + id
+                + ", login='" + login + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        User user = (User) obj;
+        return (id == user.id);
+    }
 }

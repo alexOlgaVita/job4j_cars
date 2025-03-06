@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.model.Post;
 
 import javax.persistence.Entity;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -76,7 +77,10 @@ public class PostRepository {
      * @return объявление.
      */
     public List<Post> findForLastDay() {
-        return crudRepository.query("from Post p1 where p1.created in (select max(p2.created) from Post p2", Post.class);
+        LocalDateTime endDate = LocalDateTime.now();
+        LocalDateTime startDate = endDate.minusDays(1);
+        return crudRepository.query("from Post p1 where p1.created BETWEEN :fStartDate AND :fEndDate", Post.class,
+                Map.of("fStartDate", startDate, "fEndDate", endDate));
     }
 
     /**
@@ -85,7 +89,7 @@ public class PostRepository {
      * @return объявление.
      */
     public List<Post> findWithPhoto() {
-        return crudRepository.query("from Post f JOIN FETCH f.photos a where a is not null", Post.class);
+        return crudRepository.query("FROM Post f JOIN FETCH f.photos a where a is not null", Post.class);
     }
 
     /**
@@ -95,7 +99,7 @@ public class PostRepository {
      * @return объявление.
      */
     public List<Post> findByBrand(String brand) {
-        return crudRepository.query("FROM Post f INNER JOIN FETCH f.brand a where a.name = :fBrand", Post.class,
+        return crudRepository.query("FROM Post f INNER JOIN FETCH f.car a where a.brand.name = :fBrand", Post.class,
                 Map.of("fBrand", brand));
     }
 }

@@ -33,6 +33,10 @@ public class Post {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_id")
+    private Car car;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "history_id")
     private History history;
 
