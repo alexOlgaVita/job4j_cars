@@ -26,7 +26,6 @@ public class PostUsage {
             var historyRepository = new HistoryRepository(new CrudRepository(sf));
             var postRepository = new PostRepository(new CrudRepository(sf));
             var carRepository = new CarRepository(new CrudRepository(sf));
-
             var posts = postRepository.findAllOrderById();
             for (var post : posts) {
                 postRepository.delete(post.getId().intValue());
@@ -37,7 +36,7 @@ public class PostUsage {
             }
             var photos = photoRepository.findAllOrderById();
             for (var photo : photos) {
-                photoRepository.delete(photo.getId());
+                photoRepository.delete(photo.getId().intValue());
             }
             var cars = carRepository.findAllOrderById();
             for (var car : cars) {
@@ -59,41 +58,34 @@ public class PostUsage {
             for (var user : users) {
                 userRepository.delete(user.getId());
             }
-
             var user = new User(null, "olga10", "pass10", null);
             userRepository.create(user);
-
             var engine = new Engine(null, "Бензиновый супер");
             engineRepository.create(engine);
             var engine2 = new Engine(null, "Дизельный обычный");
             engineRepository.create(engine2);
-
             var brand = new Brand(null, "superBrand");
             brandRepository.create(brand);
             var brand2 = new Brand(null, "sosoBrand");
             brandRepository.create(brand2);
             var brand3 = new Brand(null, "extraBrand");
             brandRepository.create(brand3);
-
             var carBody = new CarBody(null, "Универсал универсальный");
             carBodyRepository.create(carBody);
             var carBody2 = new CarBody(null, "Седан");
             carBodyRepository.create(carBody2);
-
             Car car1 = new Car(null, "Супер машина", engine, brand, carBody, null);
             carRepository.create(car1);
             Car car2 = new Car(null, "Просто машина", engine, brand2, carBody2, null);
             carRepository.create(car2);
             Car car3 = new Car(null, "Не Просто машина", engine2, brand, carBody2, null);
             carRepository.create(car3);
-
             var history = new History();
             LocalDateTime startDateTime = LocalDateTime.of(2026, Month.FEBRUARY, 28, 19, 30, 59);
             LocalDateTime endDateTime = LocalDateTime.of(2026, Month.MARCH, 31, 23, 59, 59);
             history.setStartAt(startDateTime);
             history.setEndAt(endDateTime);
             historyRepository.create(history);
-
             var photo1 = new Photo();
             photo1.setName("Общий вид10");
             photoRepository.create(photo1);
@@ -101,25 +93,19 @@ public class PostUsage {
             photo2.setName("Вид сбоку10");
             photoRepository.create(photo2);
             Set<Photo> photoSet = Set.of(photo1, photo2);
-
             var post = new Post(null, "Объявление 1", LocalDateTime.now(), user, car1, history, null);
             postRepository.create(post);
-
             var post2 = new Post(null, "Объявление 2", LocalDateTime.now(), user, car2, history, photoSet);
             postRepository.create(post2);
-
             var post3 = new Post(null, "Объявление 3", LocalDateTime.now(), user, car3, history, null);
             postRepository.create(post3);
-
             userRepository.findAllOrderById()
                     .forEach(System.out::println);
 
             var postsByBrand = postRepository.findByBrand("superBrand");
             postsByBrand.forEach(System.out::println);
-
             var postsWithPhoto = postRepository.findWithPhoto();
             postsWithPhoto.forEach(System.out::println);
-
             var postsForLastDay = postRepository.findForLastDay();
             postsForLastDay.forEach(System.out::println);
         } finally {
