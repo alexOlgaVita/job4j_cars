@@ -15,10 +15,17 @@ public class Car {
     private int id;
     private String name;
 
-    @ManyToOne
-   /* @JoinColumn(name = "engine_id", foreignKey = @ForeignKey(name = "ENGINE_ID_FK")) */
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "engine_id")
     private Engine engine;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_body_id")
+    private CarBody carBody;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "history_owner", joinColumns = {

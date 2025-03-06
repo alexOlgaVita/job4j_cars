@@ -18,4 +18,5 @@
     <include file="scripts/011_ddl_create_brands_update_posts_table.sql" relativeToChangelogFile="true"/>
     <include file="scripts/012_ddl_create_photos_table.sql" relativeToChangelogFile="true"/>
     <include file="scripts/013_ddl_create_posts_photos_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/014_ddl_create_ car bodies_update_posts_table.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

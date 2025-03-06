@@ -58,6 +58,6 @@ INSERT INTO brands (name) VALUES ('Maserati');
 INSERT INTO brands (name) VALUES ('Volga');
 INSERT INTO brands (name) VALUES ('Venturi');
 
-ALTER TABLE auto_posts ADD COLUMN brand_id int REFERENCES brands(id);
+ALTER TABLE cars ADD COLUMN brand_id int REFERENCES brands(id);
 
-UPDATE auto_posts SET brand_id = (SELECT id FROM brands WHERE name = 'Toyota');
+UPDATE cars SET brand_id = (SELECT id FROM brands WHERE name = 'Toyota');

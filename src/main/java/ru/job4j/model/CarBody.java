@@ -10,10 +10,10 @@ import javax.persistence.*;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "photos")
+@Table(name = "car_bodies")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Photo {
+public class CarBody {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
