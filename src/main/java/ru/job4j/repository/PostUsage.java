@@ -8,6 +8,7 @@ import ru.job4j.model.*;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.HashSet;
 import java.util.Set;
 
 public class PostUsage {
@@ -87,25 +88,32 @@ public class PostUsage {
             history.setEndAt(endDateTime);
             historyRepository.create(history);
             var photo1 = new Photo();
-            photo1.setName("Общий вид10");
+            photo1.setName("Общий вид");
             photoRepository.create(photo1);
             var photo2 = new Photo();
-            photo2.setName("Вид сбоку10");
+            photo2.setName("Вид спереди");
             photoRepository.create(photo2);
+            var photo3 = new Photo();
+            photo3.setName("Вид сбоку");
+            photoRepository.create(photo3);
             Set<Photo> photoSet = Set.of(photo1, photo2);
-            var post = new Post(null, "Объявление 1", LocalDateTime.now(), user, car1, history, null);
+            Set<Photo> photoSet2 = Set.of(photo3);
+            var post = new Post(null, "Объявление 1", LocalDateTime.now(), user, car1, history, new HashSet<Photo>());
             postRepository.create(post);
             var post2 = new Post(null, "Объявление 2", LocalDateTime.now(), user, car2, history, photoSet);
             postRepository.create(post2);
-            var post3 = new Post(null, "Объявление 3", LocalDateTime.now(), user, car3, history, null);
+            var post3 = new Post(null, "Объявление 3", LocalDateTime.now(), user, car3, history, photoSet2);
             postRepository.create(post3);
             userRepository.findAllOrderById()
                     .forEach(System.out::println);
 
             var postsByBrand = postRepository.findByBrand("superBrand");
             postsByBrand.forEach(System.out::println);
+
+            System.out.println("Объявления с фото:");
             var postsWithPhoto = postRepository.findWithPhoto();
             postsWithPhoto.forEach(System.out::println);
+            System.out.println("Объявления за последний день:");
             var postsForLastDay = postRepository.findForLastDay();
             postsForLastDay.forEach(System.out::println);
         } finally {

@@ -89,7 +89,8 @@ public class PostRepository {
      * @return объявление.
      */
     public List<Post> findWithPhoto() {
-        return crudRepository.query("FROM Post f JOIN FETCH f.photos a where a is not null", Post.class);
+        return crudRepository.query("FROM Post s where s.id in "
+                + "(Select f.id from Post f JOIN f.photos a GROUP BY f.id HAVING COUNT(*) > 0)", Post.class);
     }
 
     /**
