@@ -40,8 +40,7 @@ public class Post {
     @JoinColumn(name = "history_id")
     private History history;
 
-    /*    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)*/
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "posts_photos", joinColumns = {
             @JoinColumn(name = "post_id", nullable = false, updatable = false)},
             inverseJoinColumns = {
