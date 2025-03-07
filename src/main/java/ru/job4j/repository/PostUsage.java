@@ -15,8 +15,7 @@ public class PostUsage {
 
     /* Проверка работы фильтров */
     public static void main(String[] args) {
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure().build();
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
         try (SessionFactory sf = new MetadataSources(registry)
                 .buildMetadata().buildSessionFactory()) {
             var userRepository = new UserRepository(new CrudRepository(sf));
@@ -87,14 +86,11 @@ public class PostUsage {
             history.setStartAt(startDateTime);
             history.setEndAt(endDateTime);
             historyRepository.create(history);
-            var photo1 = new Photo();
-            photo1.setName("Общий вид");
+            var photo1 = new Photo(null, "Общий вид");
             photoRepository.create(photo1);
-            var photo2 = new Photo();
-            photo2.setName("Вид спереди");
+            var photo2 = new Photo(null, "Вид спереди");
             photoRepository.create(photo2);
-            var photo3 = new Photo();
-            photo3.setName("Вид сбоку");
+            var photo3 = new Photo(null, "Вид сбоку");
             photoRepository.create(photo3);
             Set<Photo> photoSet = Set.of(photo1, photo2);
             Set<Photo> photoSet2 = Set.of(photo3);
@@ -106,10 +102,8 @@ public class PostUsage {
             postRepository.create(post3);
             userRepository.findAllOrderById()
                     .forEach(System.out::println);
-
             var postsByBrand = postRepository.findByBrand("superBrand");
             postsByBrand.forEach(System.out::println);
-
             System.out.println("Объявления с фото:");
             var postsWithPhoto = postRepository.findWithPhoto();
             postsWithPhoto.forEach(System.out::println);
