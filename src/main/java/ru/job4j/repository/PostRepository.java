@@ -34,8 +34,13 @@ public class PostRepository {
      *
      * @param post объявление.
      */
-    public void update(Post post) {
-        crudRepository.run(session -> session.merge(post));
+    public boolean update(Post post) {
+        return crudRepository.queryBoolean(
+                "UPDATE Post SET name = :fName, description = :fDescription, car = :fCar"
+                        + "  WHERE id = :fId",
+                Map.of("fId", post.getId(),
+                        "fDescription", post.getDescription(),
+                        "fCar", post.getCar()));
     }
 
     /**
@@ -43,11 +48,10 @@ public class PostRepository {
      *
      * @param postId ID
      */
-    public void delete(int postId) {
-        crudRepository.run(
+    public boolean delete(int postId) {
+        return crudRepository.queryBoolean(
                 "delete from Post where id = :fId",
-                Map.of("fId", postId)
-        );
+                Map.of("fId", postId));
     }
 
     /**
@@ -89,8 +93,12 @@ public class PostRepository {
      * @return объявление.
      */
     public List<Post> findWithPhoto() {
+/*        альтернатива использованию size()
         return crudRepository.query("FROM Post s where s.id in "
                 + "(Select f.id from Post f JOIN f.photos a GROUP BY f.id HAVING COUNT(*) > 0)", Post.class);
+ */
+        return crudRepository.query("FROM Post f where size(f.photos) > 0", Post.class);
+
     }
 
     /**
