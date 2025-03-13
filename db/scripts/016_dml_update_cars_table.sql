@@ -1,8 +1,3 @@
-CREATE TABLE car_bodies (
-   id serial PRIMARY KEY,
-   name TEXT UNIQUE NOT NULL
-);
-
 INSERT INTO car_bodies (name) VALUES ('Седан');
 INSERT INTO car_bodies (name) VALUES ('Универсал');
 INSERT INTO car_bodies (name) VALUES ('Пикап');

@@ -1,11 +1,15 @@
 package ru.job4j.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.TimeZone;
 
 @Entity
 @Table(name = "auto_users")
@@ -19,6 +23,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String name;
+
     private String login;
 
     private String password;
@@ -26,14 +32,17 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "participates",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "post_id") }
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "post_id")}
     )
     private List<Post> participates = new ArrayList<>();
 
+    @Column(name = "user_zone")
+    private String timezone = TimeZone.getDefault().getDisplayName();
+
     @Override
     public String toString() {
-        return "Task{"
+        return "User{"
                 + "id=" + id
                 + ", login='" + login + '}';
     }

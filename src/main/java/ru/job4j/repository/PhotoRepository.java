@@ -24,8 +24,7 @@ public class PhotoRepository {
      * @return фото с id.
      */
     public Photo create(Photo photo) {
-        crudRepository.run(session -> session.persist(photo));
-        return photo;
+      return crudRepository.runBoolean(session -> session.persist(photo)) ? photo : null;
     }
 
     /**
@@ -33,8 +32,13 @@ public class PhotoRepository {
      *
      * @param photo фото.
      */
-    public void update(Photo photo) {
-        crudRepository.run(session -> session.merge(photo));
+    public boolean update(Photo photo) {
+        return crudRepository.queryBoolean(
+                "UPDATE Photo SET name = :fName, path = :fPath"
+                        + "  WHERE id = :fId",
+                Map.of("fId", photo.getId(),
+                        "fName", photo.getName(),
+                        "fPath", photo.getPath()));
     }
 
     /**

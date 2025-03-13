@@ -58,7 +58,7 @@ public class PostUsage {
             for (var user : users) {
                 userRepository.delete(user.getId());
             }
-            var user = new User(null, "olga10", "pass10", null);
+            var user = new User(null, "Olga", "olga10", "pass10", null, null);
             userRepository.create(user);
             var engine = new Engine(null, "Бензиновый супер");
             engineRepository.create(engine);
@@ -86,19 +86,19 @@ public class PostUsage {
             history.setStartAt(startDateTime);
             history.setEndAt(endDateTime);
             historyRepository.create(history);
-            var photo1 = new Photo(null, "Общий вид");
+            var photo1 = new Photo(null, "Общий вид", null);
             photoRepository.create(photo1);
-            var photo2 = new Photo(null, "Вид спереди");
+            var photo2 = new Photo(null, "Вид спереди", null);
             photoRepository.create(photo2);
-            var photo3 = new Photo(null, "Вид сбоку");
+            var photo3 = new Photo(null, "Вид сбоку", null);
             photoRepository.create(photo3);
             Set<Photo> photoSet = Set.of(photo1, photo2);
             Set<Photo> photoSet2 = Set.of(photo3);
-            var post = new Post(null, "Объявление 1", LocalDateTime.now(), user, car1, history, new HashSet<Photo>());
+            var post = new Post(null, "Объявление 1", LocalDateTime.now(), user, car1, history, new HashSet<Photo>(), false);
             postRepository.create(post);
-            var post2 = new Post(null, "Объявление 2", LocalDateTime.now(), user, car2, history, photoSet);
+            var post2 = new Post(null, "Объявление 2", LocalDateTime.now(), user, car2, history, photoSet, false);
             postRepository.create(post2);
-            var post3 = new Post(null, "Объявление 3", LocalDateTime.now(), user, car3, history, photoSet2);
+            var post3 = new Post(null, "Объявление 3", LocalDateTime.now(), user, car3, history, photoSet2, false);
             postRepository.create(post3);
             userRepository.findAllOrderById()
                     .forEach(System.out::println);

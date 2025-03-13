@@ -1,0 +1,1 @@
+ALTER TABLE auto_users ADD COLUMN user_zone varchar not null;

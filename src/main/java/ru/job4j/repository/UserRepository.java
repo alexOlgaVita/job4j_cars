@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.model.User;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -25,8 +24,7 @@ public class UserRepository {
      * @return пользователь с id.
      */
     public User create(User user) {
-        crudRepository.run(session -> session.persist(user));
-        return user;
+        return crudRepository.runBoolean(session -> session.persist(user)) ? user : null;
     }
 
     /**
@@ -94,6 +92,20 @@ public class UserRepository {
         return crudRepository.optional(
                 "from User where login = :fLogin", User.class,
                 Map.of("fLogin", login)
+        );
+    }
+
+    /**
+     * Найти пользователя по login.
+     *
+     * @param login    login.
+     * @param password password.
+     * @return Optional or user.
+     */
+    public Optional<User> findByLoginPassword(String login, String password) {
+        return crudRepository.optional(
+                "from User where login = :fLogin AND password = :fPassword", User.class,
+                Map.of("fLogin", login, "fPassword", password)
         );
     }
 }

@@ -34,7 +34,7 @@ public class Owner {
 
     @Override
     public String toString() {
-        return "Task{"
+        return "Owner{"
                 + "id=" + id
                 + ", name='" + name + '}';
     }

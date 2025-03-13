@@ -22,7 +22,7 @@ public class Engine {
 
     @Override
     public String toString() {
-        return "Task{"
+        return "Engine{"
                 + "id=" + id
                 + ", name='" + name + '}';
     }

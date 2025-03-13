@@ -24,8 +24,7 @@ public class CarRepository {
      * @return машина с id.
      */
     public Car create(Car car) {
-        crudRepository.run(session -> session.persist(car));
-        return car;
+        return crudRepository.runBoolean(session -> session.persist(car)) ? car : null;
     }
 
     /**
@@ -33,8 +32,13 @@ public class CarRepository {
      *
      * @param car машина.
      */
-    public void update(Car car) {
-        crudRepository.run(session -> session.merge(car));
+    public boolean update(Car car) {
+        return crudRepository.queryBoolean(
+
+                "UPDATE Car SET name = :fName, engine = :fEngine, brand = :fBrand, carBody = :fCarBody"
+                        + "  WHERE id = :fId",
+                Map.of("fId", car.getId(), "fName", car.getName(),
+                        "fEngine", car.getEngine(), "fBrand", car.getBrand(), "fCarBody", car.getCarBody()));
     }
 
     /**
@@ -42,11 +46,10 @@ public class CarRepository {
      *
      * @param carId ID
      */
-    public void delete(int carId) {
-        crudRepository.run(
+    public boolean delete(int carId) {
+        return crudRepository.queryBoolean(
                 "delete from Car where id = :fId",
-                Map.of("fId", carId)
-        );
+                Map.of("fId", carId));
     }
 
     /**

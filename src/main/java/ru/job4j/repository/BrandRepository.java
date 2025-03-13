@@ -55,7 +55,7 @@ public class BrandRepository {
      * @return список двигателей.
      */
     public List<Brand> findAllOrderById() {
-        return crudRepository.query("from Brand order by id asc", Brand.class);
+        return crudRepository.query("from Brand order by name asc", Brand.class);
     }
 
     /**

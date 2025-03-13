@@ -25,8 +25,7 @@ public class PostRepository {
      * @return объявление с id.
      */
     public Post create(Post post) {
-        crudRepository.run(session -> session.persist(post));
-        return post;
+        return crudRepository.runBoolean(session -> session.persist(post)) ? post : null;
     }
 
     /**
@@ -35,12 +34,60 @@ public class PostRepository {
      * @param post объявление.
      */
     public boolean update(Post post) {
+
         return crudRepository.queryBoolean(
-                "UPDATE Post SET name = :fName, description = :fDescription, car = :fCar"
-                        + "  WHERE id = :fId",
+                "UPDATE Post p SET p.description = :fDescription, p.car = :fCar"
+                        + "  WHERE p.id = :fId",
                 Map.of("fId", post.getId(),
                         "fDescription", post.getDescription(),
                         "fCar", post.getCar()));
+
+/*     Доработать реализацию обновления фото
+/*
+                "UPDATE Post p SET p.description = :fDescription, p.photos = :fImages, p.car = :fCar"
+                        + "  WHERE p.id = :fId",
+                Map.of("fId", post.getId(),
+                        "fDescription", post.getDescription(),
+                        "fImages", post.getPhotos(),
+                        "fCar", post.getCar()));
+*/
+/*
+        "UPDATE Post p SET p.photos = :fImages"
+                + "  WHERE p.id = :fId",
+                Map.of("fId", post.getId()),
+                                Map.of("fImages", new ArrayList<>(post.getPhotos())));
+        //Map.of("fImages", post.getPhotos()));
+ */
+    }
+
+    /**
+     * Установить значение поля done в "true".
+     *
+     * @param id иденификатор объявления.
+     */
+    public boolean setDone(int id) {
+        return crudRepository.queryBoolean(
+                "UPDATE Post SET done = true WHERE id = :fId AND done != true", Map.of("fId", id));
+    }
+
+    /**
+     * Список объявлений проданных машин.
+     *
+     * @return список объявлений.
+     */
+    public List<Post> findAllDone() {
+        return crudRepository.query("from Post f INNER JOIN FETCH f.car where f.done = true order by f.id asc",
+                Post.class);
+    }
+
+    /**
+     * Список новых объявлений (машина не продана).
+     *
+     * @return список объявлений.
+     */
+    public List<Post> findAllNew() {
+        return crudRepository.query("from Post f INNER JOIN FETCH f.car where f.done = false order by f.id asc",
+                Post.class);
     }
 
     /**
@@ -60,7 +107,7 @@ public class PostRepository {
      * @return список объявлений.
      */
     public List<Post> findAllOrderById() {
-        return crudRepository.query("from Post order by id asc", Post.class);
+        return crudRepository.query("from Post f INNER JOIN FETCH f.car order by f.id asc", Post.class);
     }
 
     /**
@@ -70,7 +117,12 @@ public class PostRepository {
      */
     public Optional<Post> findById(int postId) {
         return crudRepository.optional(
-                "from Post where id = :fId", Post.class,
+                "from Post f INNER JOIN FETCH f.car a "
+                        + "INNER JOIN FETCH a.engine "
+                        + "INNER JOIN FETCH a.brand "
+                        + "INNER JOIN FETCH a.carBody "
+                        + "INNER JOIN FETCH f.photos "
+                        + "where f.id = :fId", Post.class,
                 Map.of("fId", postId)
         );
     }

@@ -41,15 +41,19 @@ public class Post {
     private History history;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    /*            @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) */
     @JoinTable(name = "posts_photos", joinColumns = {
             @JoinColumn(name = "post_id", nullable = false, updatable = false)},
             inverseJoinColumns = {
                     @JoinColumn(name = "photo_id", nullable = false, updatable = false)})
     private Set<Photo> photos = new HashSet<>();
+    /*    private List<Photo> photos = new ArrayList<>(); */
+
+    private boolean done = false;
 
     @Override
     public String toString() {
-        return "Task{"
+        return "Post{"
                 + "id=" + id
                 + ", description='" + description + '\''
                 + '}';

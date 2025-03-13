@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: header"></head>
+<body>
+<div th:replace="fragments/navigation :: navigation"></div>
+<div class="container">
+    <div th:if="${message}">
+        <h3 class="mt-3">Произошла ошибка</h3>
+        <p class="text-danger" th:text="${message}"></p>
+    </div>
+    <form class="mt-3" th:action="@{/users/register}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="name" class="form-label"><b>Имя</b></label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Иван" required pattern="\S(.*\S)?" title="Поле 'Имя' должно быть заполнено без ведущих и конечных пробелов">
+        </div>
+        <div class="mb-3">
+            <label for="login" class="form-label"><b>Логин</b></label>
+            <input type="login" class="form-control" id="login" name="login" placeholder="Введите login" required pattern="\S(.*\S)?" title="Поле 'Логин' должно быть заполнено без ведущих и конечных пробелов">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label"><b>Пароль</b></label>
+            <input type="password" class="form-control" id="password" name="password" required pattern="\S(.*\S)?" title="Поле 'Пароль' is должно быть заполнено без ведущих и конечных пробелов">
+        </div>
+        <div class="mb-3">
+            <label for="timezone"><b>Временная зона</b></label>
+            <select class="form-control" id="timezone" name="timezone" th:required="true">
+                <option th:each="timezone : ${timezones}" th:value="${timezone}"
+                        th:text="${timezone}"
+                        th:selected="${timezone==userTimezoneDef}">
+                </option>
+            </select>
+        </div>
+        <div class="mb-3 row">
+            <div class="col-6"></div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-6"><a class="btn btn-danger w-100" href="../">Отмена</a></div>
+                    <div class="col-6">
+                        <button class="btn btn-primary w-100" type="submit">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<footer th:include="fragments/footer :: footer"></footer>
+</body>
+</html>

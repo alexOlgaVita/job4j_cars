@@ -20,10 +20,24 @@ public class Photo {
     private Integer id;
 
     private String name;
+    private String path;
+
+    /*    @ManyToMany(fetch = FetchType.LAZY)*/
+    /*
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "posts_photos", joinColumns = {
+            @JoinColumn(name = "photo_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "post_id", nullable = false, updatable = false)})
+    private Set<Photo> posts = new HashSet<>();*/
+
+    public Photo(String name) {
+        this.name = name;
+    }
 
     @Override
     public String toString() {
-        return "Task{"
+        return "Photo{"
                 + "id=" + id
                 + ", name='" + name + '}';
     }

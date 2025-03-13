@@ -43,7 +43,7 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Task{"
+        return "Car{"
                 + "id=" + id
                 + ", name='" + name + '}';
     }

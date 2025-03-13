@@ -1,0 +1,3 @@
+--INSERT INTO auto_users (name, login, "password") VALUES ('Иванов', 'Ivanov', 'root');
+--INSERT INTO auto_users (name, login, "password") VALUES ('Петров', 'Petrov', 'root');
+--INSERT INTO auto_users (name, login, "password") VALUES ('Сидоров', 'Sidorov', 'root');

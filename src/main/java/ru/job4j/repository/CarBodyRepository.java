@@ -3,7 +3,6 @@ package ru.job4j.repository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.job4j.model.CarBody;
-import ru.job4j.model.CarBody;
 
 import javax.persistence.Entity;
 import java.util.List;

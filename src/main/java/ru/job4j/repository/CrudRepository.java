@@ -99,6 +99,21 @@ public class CrudRepository {
         return txBoolean(command);
     }
 
+    public <T, E> boolean queryBoolean(String query, Map<String, Object> args, Map<String, List<E>> argsList) {
+        Predicate<Session> command = session -> {
+            var sq = session
+                    .createQuery(query);
+            for (Map.Entry<String, Object> arg : args.entrySet()) {
+                sq.setParameter(arg.getKey(), arg.getValue());
+            }
+            for (Map.Entry<String, List<E>> arg : argsList.entrySet()) {
+                sq.setParameterList(arg.getKey(), arg.getValue());
+            }
+            return sq.executeUpdate() > 0;
+        };
+        return txBoolean(command);
+    }
+
     public <T> boolean txBoolean(Predicate<Session> command) {
         Session session = sf.openSession();
         Transaction transaction = null;
