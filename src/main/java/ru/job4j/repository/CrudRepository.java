@@ -1,6 +1,7 @@
 package ru.job4j.repository;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -15,7 +16,9 @@ import java.util.function.Predicate;
 
 @Repository
 @AllArgsConstructor
+@Slf4j
 public class CrudRepository {
+
     private final SessionFactory sf;
 
     public void run(Consumer<Session> command) {
@@ -126,7 +129,7 @@ public class CrudRepository {
             if (transaction != null) {
                 transaction.rollback();
             }
-            e.printStackTrace();
+            log.error("Exception in log CrudRepository", e);
             return false;
         } finally {
             session.close();
